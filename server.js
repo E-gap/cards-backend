@@ -3,7 +3,7 @@ const app = require("./app");
 
 require("dotenv").config();
 
-const { DB_HOST, PORT = 3001 } = process.env;
+const { DB_HOST, PORT } = process.env;
 
 mongoose
   .connect(DB_HOST)
@@ -14,6 +14,5 @@ mongoose
   })
   .catch((error) => {
     console.log(error.message);
-    // закриваємо запущені процеси, 1 означає закрити з невідомою помилкою
     process.exit(1);
   });
