@@ -4,8 +4,6 @@ require("dotenv").config();
 
 const { DB_HOST, PORT = 3001 } = process.env;
 
-console.log(DB_HOST);
-
 mongoose
   .connect(DB_HOST)
   .then(() => {
