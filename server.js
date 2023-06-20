@@ -1,13 +1,15 @@
 const mongoose = require("mongoose");
+const app = require("./app");
 
 require("dotenv").config();
 
 const { DB_HOST, PORT = 3001 } = process.env;
 
-console.log(PORT);
+console.log(DB_HOST);
+console.log(DB_HOST.toString());
 
 mongoose
-  .connect(DB_HOST.toString())
+  .connect(DB_HOST)
   .then(() => {
     app.listen(PORT, () => {
       console.log("Database connection successful");
@@ -18,5 +20,3 @@ mongoose
     // закриваємо запущені процеси, 1 означає закрити з невідомою помилкою
     process.exit(1);
   });
-
-const app = require("./app");
