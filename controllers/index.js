@@ -18,6 +18,8 @@ const {
   userUpdateAvatar,
 } = require("./users");
 
+const { getAllScores } = require("./scores");
+
 module.exports = {
   getAllContacts,
   getContactById,
@@ -33,4 +35,5 @@ module.exports = {
   userLogout,
   userUpdateSubscription,
   userUpdateAvatar,
+  getAllScores,
 };
