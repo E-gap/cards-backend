@@ -1,5 +1,5 @@
 const { Schema } = require("mongoose");
-const Joi = require("joi");
+const Joi = require("joi"); // для перевірки баді при запиті
 
 const emailRegexp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -41,8 +41,25 @@ const contactSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-// схемы Joi для пользователей
+// схема mongoose для scores
+const scoreSchema = new Schema(
+  {
+    score: {
+      type: Number,
+      required: true,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
+  },
+  { versionKey: false, timestamps: true }
+);
+
+// схемы Joi для пользователей - проверка req.body
 const registerSchema = Joi.object({
+  name: Joi.string().required(),
   password: Joi.string().min(6).required(),
   email: Joi.string().pattern(emailRegexp).required(),
 });
@@ -96,4 +113,5 @@ module.exports = {
   userSchema,
   emailSchema,
   registerSchema,
+  scoreSchema,
 };
