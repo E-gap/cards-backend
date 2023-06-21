@@ -43,19 +43,19 @@ const getAllScores = async (req, res, next) => {
   }
 }; */
 
-/* const addContact = async (req, res, next) => {
-  const { _id: owner } = req.user;
+const addScore = async (req, res, next) => {
+  // const { _id: owner } = req.user;
   try {
-    const { error } = addContactsSchema.validate(req.body);
-    if (error) {
+    // const { error } = addContactsSchema.validate(req.body);
+    /*  if (error) {
       throw HttpError(404, "missing required name field");
-    }
-    const result = await Contact.create({ ...req.body, owner });
+    } */
+    const result = await Score.create({ ...req.body /* , owner */ });
     res.status(201).json({ data: result });
   } catch (error) {
     next(error);
   }
-}; */
+};
 
 /* const deleteContact = async (req, res, next) => {
   try {
@@ -113,9 +113,9 @@ const getAllScores = async (req, res, next) => {
 
 module.exports = {
   getAllScores,
-  /* getContactById,
-  addContact,
-  deleteContact,
+  // getContactById,
+  addScore,
+  /* deleteContact,
   putContact,
   patchContactFavorite, */
 };

@@ -8,11 +8,11 @@ const router = express.Router();
 
 router.get("/", /* authenticate, */ ctrl.getAllScores);
 
-/* router.get("/:id", authenticate, ctrl.getContactById);
+// router.get("/:id", authenticate, ctrl.getContactById);
 
-router.post("/", authenticate, ctrl.addContact);
+router.post("/", /* authenticate, */ ctrl.addScore);
 
-router.delete("/:contactId", authenticate, ctrl.deleteContact);
+/* router.delete("/:contactId", authenticate, ctrl.deleteContact);
 
 router.put("/:contactId", authenticate, ctrl.putContact);
 

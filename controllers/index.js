@@ -18,7 +18,7 @@ const {
   userUpdateAvatar,
 } = require("./users");
 
-const { getAllScores } = require("./scores");
+const { getAllScores, addScore } = require("./scores");
 
 module.exports = {
   getAllContacts,
@@ -36,4 +36,5 @@ module.exports = {
   userUpdateSubscription,
   userUpdateAvatar,
   getAllScores,
+  addScore,
 };
