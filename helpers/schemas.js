@@ -73,6 +73,10 @@ const emailSchema = Joi.object({
 
 const userSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: [true, "User's name is required"],
+    },
     password: {
       type: String,
       minlength: 6,
@@ -84,11 +88,11 @@ const userSchema = new Schema(
       required: [true, "Ema/* il is required"],
       unique: true,
     },
-    subscription: {
+    /*  subscription: {
       type: String,
       enum: ["starter", "pro", "business"],
       default: "starter",
-    },
+    }, */
     token: {
       type: String,
       default: "",
