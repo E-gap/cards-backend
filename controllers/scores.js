@@ -20,6 +20,7 @@ const getAllScores = async (req, res, next) => {
       limit,
     }).select({ favorite } */
       ();
+
     res.status(200).json({
       data: result,
     });

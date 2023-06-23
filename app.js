@@ -22,8 +22,8 @@ app.use(express.json());
 
 // виносимо маршрути в окремі файли
 app.use("/api/users", usersRouter);
-app.use("/api/contacts", contactsRouter);
 app.use("/api/scores", scoresRouter);
+app.use("/api/contacts", contactsRouter);
 
 // не знайдено адреси, доходить до цього мідлвару
 app.use((req, res) => {

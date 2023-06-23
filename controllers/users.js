@@ -182,19 +182,16 @@ const userLogin = async (req, res, next) => {
 };
 
 const userCurrent = (req, res, next) => {
-  const { email, subscription } = req.user;
+  const { email } = req.user;
   res.status(200).json({
     email,
-    subscription,
   });
 };
 
 const userLogout = async (req, res, next) => {
   try {
     const { _id } = req.user;
-    console.log(_id);
     await User.findByIdAndUpdate(_id, { token: "" });
-    console.log("ok");
     res.status(204).json({});
   } catch (error) {
     next(error);
