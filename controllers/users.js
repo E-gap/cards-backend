@@ -20,7 +20,7 @@ const {
 const userRegister = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    console.log(email);
+
     // проверяем бади по схеме joi
     const { error } = registerSchema.validate(req.body);
     if (error) {
@@ -38,9 +38,14 @@ const userRegister = async (req, res, next) => {
     // const avatarURL = gravatar.url(email);
     // const verificationToken = uuidv4();
 
+    const token = jwt.sign({ id: userExist._id }, SECRET_KEY, {
+      expiresIn: "23h",
+    });
+
     const newUser = await User.create({
       ...req.body,
       password: hashPassword,
+      token,
       // avatarURL,
       // verificationToken,
     });
@@ -59,10 +64,9 @@ const userRegister = async (req, res, next) => {
     /* sendEmail(verifyEmail); */
 
     res.status(201).json({
+      token,
       user: {
         email: newUser.email,
-        subscription: newUser.subscription,
-        // avatarURL,
       },
     });
   } catch (error) {
