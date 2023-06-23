@@ -4,7 +4,7 @@ require("dotenv").config();
 // const gravatar = require("gravatar");
 const fs = require("fs/promises");
 const path = require("path");
-const { v4: uuidv4 } = require("uuid");
+// const { v4: uuidv4 } = require("uuid");
 
 const { SECRET_KEY, BASE_URL } = process.env;
 
@@ -35,13 +35,13 @@ const userRegister = async (req, res, next) => {
 
     const hashPassword = await bcrypt.hash(password, 10);
     // const avatarURL = gravatar.url(email);
-    const verificationToken = uuidv4();
+    // const verificationToken = uuidv4();
 
     const newUser = await User.create({
       ...req.body,
       password: hashPassword,
       // avatarURL,
-      verificationToken,
+      // verificationToken,
     });
 
     /* const verifyEmail = {
