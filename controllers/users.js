@@ -20,6 +20,7 @@ const {
 const userRegister = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    console.log(email);
     // проверяем бади по схеме joi
     const { error } = registerSchema.validate(req.body);
     if (error) {
