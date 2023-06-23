@@ -64,6 +64,11 @@ const registerSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
 });
 
+const loginSchema = Joi.object({
+  password: Joi.string().min(6).required(),
+  email: Joi.string().pattern(emailRegexp).required(),
+});
+
 // схемы Joi для email пользователей
 const emailSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
@@ -117,5 +122,6 @@ module.exports = {
   userSchema,
   emailSchema,
   registerSchema,
+  loginSchema,
   scoreSchema,
 };

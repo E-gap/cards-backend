@@ -8,6 +8,7 @@ const {
   userSchema,
   emailSchema,
   registerSchema,
+  loginSchema,
 } = require("./schemas");
 
 module.exports = {
@@ -19,5 +20,6 @@ module.exports = {
   userSchema,
   emailSchema,
   registerSchema,
+  loginSchema,
   sendEmail,
 };

@@ -13,6 +13,7 @@ const User = require("../models/user");
 const {
   HttpError,
   registerSchema,
+  loginSchema,
   sendEmail,
   emailSchema,
 } = require("../helpers");
@@ -20,7 +21,6 @@ const {
 const userRegister = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
     // проверяем бади по схеме joi
     const { error } = registerSchema.validate(req.body);
     if (error) {
@@ -38,17 +38,19 @@ const userRegister = async (req, res, next) => {
     // const avatarURL = gravatar.url(email);
     // const verificationToken = uuidv4();
 
-    const token = jwt.sign({ id: userExist._id }, SECRET_KEY, {
-      expiresIn: "23h",
-    });
-
     const newUser = await User.create({
       ...req.body,
       password: hashPassword,
-      token,
+
       // avatarURL,
       // verificationToken,
     });
+
+    const token = jwt.sign({ id: newUser._id }, SECRET_KEY, {
+      expiresIn: "23h",
+    });
+
+    await User.findByIdAndUpdate(newUser._id, { token });
 
     /* const verifyEmail = {
       to: email,
@@ -67,6 +69,8 @@ const userRegister = async (req, res, next) => {
       token,
       user: {
         email: newUser.email,
+        name: newUser.name,
+        token,
       },
     });
   } catch (error) {
@@ -138,7 +142,7 @@ const userVerifyEmailRepetedly = async (req, res, next) => {
 const userLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const { error } = registerSchema.validate(req.body);
+    const { error } = loginSchema.validate(req.body);
     if (error) {
       throw HttpError(
         400,
@@ -150,9 +154,9 @@ const userLogin = async (req, res, next) => {
       throw HttpError(401, "Email or password is wrong");
     }
 
-    if (!userExist.verify) {
+    /* if (!userExist.verify) {
       throw HttpError(401, "Email is not verified");
-    }
+    } */
 
     const isPasswordRight = await bcrypt.compare(password, userExist.password);
     if (!isPasswordRight) {
@@ -168,7 +172,7 @@ const userLogin = async (req, res, next) => {
       token,
       user: {
         email: userExist.email,
-        subscription: userExist.subscription,
+        name: userExist.name,
         token,
       },
     });
@@ -188,8 +192,10 @@ const userCurrent = (req, res, next) => {
 const userLogout = async (req, res, next) => {
   try {
     const { _id } = req.user;
+    console.log(_id);
     await User.findByIdAndUpdate(_id, { token: "" });
-    res.status(204);
+    console.log("ok");
+    res.status(204).json({});
   } catch (error) {
     next(error);
   }
