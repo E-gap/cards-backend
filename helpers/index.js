@@ -9,6 +9,7 @@ const {
   emailSchema,
   registerSchema,
   loginSchema,
+  addScoreSchema,
 } = require("./schemas");
 
 module.exports = {
@@ -16,6 +17,7 @@ module.exports = {
   addContactsSchema,
   patchContactsFavoriteSchema,
   scoreSchema,
+  addScoreSchema,
   contactSchema,
   userSchema,
   emailSchema,

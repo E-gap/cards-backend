@@ -41,11 +41,21 @@ const contactSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
+// схемы Joi для score
+const addScoreSchema = Joi.object({
+  score: Joi.number().required(),
+  date: Joi.date(),
+});
+
 // схема mongoose для scores
 const scoreSchema = new Schema(
   {
     score: {
       type: Number,
+      required: true,
+    },
+    date: {
+      type: Date,
       required: true,
     },
     owner: {
@@ -124,4 +134,5 @@ module.exports = {
   registerSchema,
   loginSchema,
   scoreSchema,
+  addScoreSchema,
 };

@@ -1,9 +1,5 @@
 const Score = require("../models/score");
-/* const {
-  HttpError,
-  addContactsSchema,
-  patchContactsFavoriteSchema,
-} = require("../helpers"); */
+const { HttpError, addScoreSchema } = require("../helpers");
 
 const getAllScores = async (req, res, next) => {
   // const { _id: owner } = req.user;
@@ -19,7 +15,8 @@ const getAllScores = async (req, res, next) => {
       skip,
       limit,
     }).select({ favorite } */
-      ();
+      ()
+      .populate("owner", "name");
 
     res.status(200).json({
       data: result,
@@ -45,13 +42,16 @@ const getAllScores = async (req, res, next) => {
 }; */
 
 const addScore = async (req, res, next) => {
-  // const { _id: owner } = req.user;
+  const { _id: owner } = req.user;
+
   try {
-    // const { error } = addContactsSchema.validate(req.body);
-    /*  if (error) {
+    console.log(req.body);
+    const { error } = addScoreSchema.validate(req.body);
+    if (error) {
       throw HttpError(404, "missing required name field");
-    } */
-    const result = await Score.create({ ...req.body /* , owner */ });
+    }
+
+    const result = await Score.create({ ...req.body, owner });
     res.status(201).json({ data: result });
   } catch (error) {
     next(error);
