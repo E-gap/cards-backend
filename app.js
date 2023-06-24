@@ -2,7 +2,6 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
-const contactsRouter = require("./routes/api/contacts");
 const usersRouter = require("./routes/api/users");
 const scoresRouter = require("./routes/api/scores");
 
@@ -23,7 +22,6 @@ app.use(express.json());
 // виносимо маршрути в окремі файли
 app.use("/api/users", usersRouter);
 app.use("/api/scores", scoresRouter);
-app.use("/api/contacts", contactsRouter);
 
 // не знайдено адреси, доходить до цього мідлвару
 app.use((req, res) => {

@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-// const gravatar = require("gravatar");
 const fs = require("fs/promises");
 const path = require("path");
 // const { v4: uuidv4 } = require("uuid");
@@ -51,19 +50,6 @@ const userRegister = async (req, res, next) => {
     });
 
     await User.findByIdAndUpdate(newUser._id, { token });
-
-    /* const verifyEmail = {
-      to: email,
-      subject: "Verify email",
-      html: `<a
-          target="_blank"
-          href="${BASE_URL}/api/users/verify/${verificationToken}"
-        >
-          Click verify email
-        </a>`,
-    }; */
-
-    /* sendEmail(verifyEmail); */
 
     res.status(201).json({
       token,
@@ -153,10 +139,6 @@ const userLogin = async (req, res, next) => {
     if (!userExist) {
       throw HttpError(401, "Email or password is wrong");
     }
-
-    /* if (!userExist.verify) {
-      throw HttpError(401, "Email is not verified");
-    } */
 
     const isPasswordRight = await bcrypt.compare(password, userExist.password);
     if (!isPasswordRight) {

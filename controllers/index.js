@@ -1,40 +1,13 @@
-const {
-  getAllContacts,
-  getContactById,
-  addContact,
-  deleteContact,
-  putContact,
-  patchContactFavorite,
-} = require("./contacts");
+const { userRegister, userLogin, userCurrent, userLogout } = require("./users");
 
-const {
-  userRegister,
-  userVerifyEmail,
-  userVerifyEmailRepetedly,
-  userLogin,
-  userCurrent,
-  userLogout,
-  userUpdateSubscription,
-  userUpdateAvatar,
-} = require("./users");
-
-const { getAllScores, addScore } = require("./scores");
+const { getAllScores, addScore, getUserScores } = require("./scores");
 
 module.exports = {
-  getAllContacts,
-  getContactById,
-  addContact,
-  deleteContact,
-  putContact,
-  patchContactFavorite,
   userRegister,
-  userVerifyEmail,
-  userVerifyEmailRepetedly,
   userLogin,
   userCurrent,
   userLogout,
-  userUpdateSubscription,
-  userUpdateAvatar,
   getAllScores,
   addScore,
+  getUserScores,
 };
