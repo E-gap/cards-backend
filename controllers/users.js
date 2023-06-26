@@ -1,9 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const fs = require("fs/promises");
-const path = require("path");
-// const { v4: uuidv4 } = require("uuid");
 
 const { SECRET_KEY, BASE_URL } = process.env;
 
@@ -164,9 +161,10 @@ const userLogin = async (req, res, next) => {
 };
 
 const userCurrent = (req, res, next) => {
-  const { email } = req.user;
+  const { email, name } = req.user;
+  console.log(email, name);
   res.status(200).json({
-    email,
+    user: { email, name },
   });
 };
 
@@ -180,43 +178,6 @@ const userLogout = async (req, res, next) => {
   }
 };
 
-const userUpdateSubscription = async (req, res, next) => {
-  try {
-    const { _id } = req.user;
-    const { subscription } = req.body;
-    await User.findByIdAndUpdate(
-      _id,
-      { subscription },
-      { runValidators: true }
-    );
-    res.status(200).json({
-      subscription,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const userUpdateAvatar = async (req, res, next) => {
-  try {
-    const { _id } = req.user;
-    const newDirFile = path.join(__dirname, "../", "public", "avatars");
-    const { path: oldPathFile, originalname } = req.file;
-
-    const newPathFile = path.join(newDirFile, `${_id}_${originalname}`);
-    await fs.rename(oldPathFile, newPathFile);
-
-    const avatarURL = path.join("avatars", `${_id}_${originalname}`);
-
-    await User.findByIdAndUpdate(_id, { avatarURL });
-    res.status(200).json({
-      avatarURL,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
 module.exports = {
   userRegister,
   userVerifyEmail,
@@ -224,6 +185,4 @@ module.exports = {
   userLogin,
   userCurrent,
   userLogout,
-  userUpdateSubscription,
-  userUpdateAvatar,
 };
