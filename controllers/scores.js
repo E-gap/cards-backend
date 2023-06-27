@@ -35,6 +35,7 @@ const addScore = async (req, res, next) => {
     }
 
     const result = await Score.create({ ...req.body, owner });
+    console.log(result);
     res.status(201).json({ data: result });
   } catch (error) {
     next(error);

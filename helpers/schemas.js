@@ -6,7 +6,7 @@ const emailRegexp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // схемы Joi для score
 const addScoreSchema = Joi.object({
   score: Joi.number().required(),
-  date: Joi.date(),
+  date: Joi.string().required(),
 });
 
 // схема mongoose для scores
@@ -17,7 +17,7 @@ const scoreSchema = new Schema(
       required: true,
     },
     date: {
-      type: Date,
+      type: String,
       required: true,
     },
     owner: {

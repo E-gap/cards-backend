@@ -2,17 +2,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const { SECRET_KEY, BASE_URL } = process.env;
+const { SECRET_KEY } = process.env;
 
 const User = require("../models/user");
 
-const {
-  HttpError,
-  registerSchema,
-  loginSchema,
-  sendEmail,
-  emailSchema,
-} = require("../helpers");
+const { HttpError, registerSchema, loginSchema } = require("../helpers");
 
 const userRegister = async (req, res, next) => {
   try {
@@ -31,15 +25,10 @@ const userRegister = async (req, res, next) => {
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
-    // const avatarURL = gravatar.url(email);
-    // const verificationToken = uuidv4();
 
     const newUser = await User.create({
       ...req.body,
       password: hashPassword,
-
-      // avatarURL,
-      // verificationToken,
     });
 
     const token = jwt.sign({ id: newUser._id }, SECRET_KEY, {
@@ -55,67 +44,6 @@ const userRegister = async (req, res, next) => {
         name: newUser.name,
         token,
       },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const userVerifyEmail = async (req, res, next) => {
-  try {
-    const { verificationToken } = req.params;
-    const user = await User.findOne({ verificationToken });
-    if (!user) {
-      res.status(404).json({
-        message: "User not found",
-      });
-    }
-
-    await User.findByIdAndUpdate(user._id, {
-      verify: true,
-      verificationToken: "",
-    });
-
-    res.status(200).json({
-      message: "Verification successful",
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const userVerifyEmailRepetedly = async (req, res, next) => {
-  try {
-    const { email } = req.body;
-    const { error } = emailSchema.validate(req.body);
-    if (error) {
-      throw HttpError(400, "missing required field email");
-    }
-
-    const userExist = await User.findOne({ email });
-    if (!userExist) {
-      throw HttpError(404, "User not found");
-    }
-
-    if (userExist.verify) {
-      throw HttpError(404, "Verification has already been passed");
-    }
-
-    const verifyEmail = {
-      to: email,
-      subject: "Verify email",
-      html: `<a
-          target="_blank"
-          href="${BASE_URL}/api/users/verify/${userExist.verificationToken}"
-        >
-          Click verify email
-        </a>`,
-    };
-
-    sendEmail(verifyEmail);
-
-    res.status(200).json({
-      message: "Verification email sent",
     });
   } catch (error) {
     next(error);
@@ -180,8 +108,6 @@ const userLogout = async (req, res, next) => {
 
 module.exports = {
   userRegister,
-  userVerifyEmail,
-  userVerifyEmailRepetedly,
   userLogin,
   userCurrent,
   userLogout,
