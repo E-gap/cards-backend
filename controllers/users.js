@@ -90,7 +90,7 @@ const userLogin = async (req, res, next) => {
 
 const userCurrent = (req, res, next) => {
   const { email, name } = req.user;
-  console.log(email, name);
+
   res.status(200).json({
     user: { email, name },
   });
