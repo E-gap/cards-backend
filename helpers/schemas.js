@@ -1,6 +1,6 @@
 const { Schema } = require("mongoose");
 const Joi = require("joi"); // для перевірки баді при запиті
-
+require("dotenv").config();
 const emailRegexp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // схемы Joi для score
