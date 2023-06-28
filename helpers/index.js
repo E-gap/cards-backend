@@ -1,5 +1,5 @@
 const HttpError = require("./HttpError");
-const sendEmail = require("./sendEmail");
+
 const {
   addContactsSchema,
   patchContactsFavoriteSchema,
@@ -23,5 +23,4 @@ module.exports = {
   emailSchema,
   registerSchema,
   loginSchema,
-  sendEmail,
 };
