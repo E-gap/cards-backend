@@ -3,7 +3,7 @@ const { HttpError, addScoreSchema } = require("../helpers");
 
 const getAllScores = async (req, res, next) => {
   try {
-    const result = await Score.find().populate("owner", "name");
+    const result = await Score.find().sort("date").populate("owner", "name");
     res.status(200).json({
       data: result,
     });
