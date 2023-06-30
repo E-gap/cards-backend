@@ -16,7 +16,9 @@ const getUserScores = async (req, res, next) => {
   const { _id: owner } = req.user;
 
   try {
-    const result = await Score.find({ owner: owner }).populate("owner", "name");
+    const result = await Score.find({ owner: owner })
+      .sort("-date")
+      .populate("owner", "name");
     res.status(200).json({
       data: result,
     });
